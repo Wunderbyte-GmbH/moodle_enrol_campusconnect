@@ -15,38 +15,78 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Manual enrolment plugin main library file.
+ * Campusconnect enrolment plugin main library file.
  *
- * @package    enrol
- * @subpackage manual
- * @copyright  2010 Petr Skoda {@link http://skodak.org}
+ * @package    enrol_campusconnect
+ * @copyright  2023 Wunderbyte Gmbh <info@wunderbyte.at>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
+/**
+ * Campusconnect enrolment plugin implementation.
+ * @package    enrol_campusconnect
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class enrol_campusconnect_plugin extends enrol_plugin {
 
+    /**
+     * Roles_protected.
+     *
+     * @return mixed
+     *
+     */
     public function roles_protected() {
         // Users may NOT tweak the roles later.
         return true;
     }
 
+    /**
+     * Allow enrol.
+     *
+     * @param stdClass $instance
+     *
+     * @return mixed
+     *
+     */
     public function allow_enrol(stdClass $instance) {
         // Users with enrol cap may NOT enrol other users via this plugin.
         return false;
     }
 
+    /**
+     * Allow unenrol.
+     *
+     * @param stdClass $instance
+     *
+     * @return mixed
+     *
+     */
     public function allow_unenrol(stdClass $instance) {
         // Users with unenrol cap may NOT unenrol other users via this plugin.
         return false;
     }
 
+    /**
+     * Allow manage.
+     *
+     * @param stdClass $instance
+     *
+     * @return mixed
+     *
+     */
     public function allow_manage(stdClass $instance) {
         // Users with manage cap may NOT tweak period and status.
         return false;
     }
 
+    /**
+     * Instance deleteable.
+     *
+     * @param mixed $instance
+     *
+     * @return mixed
+     *
+     */
     public function instance_deleteable($instance) {
         // Users should NOT be able to delete the instance.
         return false;
@@ -58,19 +98,19 @@ class enrol_campusconnect_plugin extends enrol_plugin {
      * @return int id of new instance, null if can not be created
      */
     public function add_default_instance($course) {
-        return $this->add_instance($course, array('status' => ENROL_INSTANCE_ENABLED));
+        return $this->add_instance($course, ['status' => ENROL_INSTANCE_ENABLED]);
     }
 
     /**
      * Add new instance of enrol plugin.
      * @param object $course
      * @param array $fields instance fields
-     * @return int id of new instance, null if can not be created
+     * @return int|null id of new instance, null if can not be created
      */
     public function add_instance($course, array $fields = null) {
         global $DB;
 
-        if ($DB->record_exists('enrol', array('courseid' => $course->id, 'enrol' => 'campusconnect'))) {
+        if ($DB->record_exists('enrol', ['courseid' => $course->id, 'enrol' => 'campusconnect'])) {
             // Only one instance allowed, sorry.
             return null;
         }

@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019111300;        // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires = 2017051505; // Moodle 3.3.5+
-$plugin->cron = 0; // No cron
+$plugin->version = 2019111300;  // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires = 2017051505; // Moodle 3.3.5+.
+$plugin->cron = 0;              // No cron.
 $plugin->component = 'enrol_campusconnect';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '3.3.5+ (Build: 2019111300)';
